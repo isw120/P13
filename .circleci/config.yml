@@ -41,6 +41,21 @@ jobs:
           name: Run flake8
           command: flake8
 
+  docker-containerization:
+    docker:
+      - image: cimg/python:3.9.2
+
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Publish Docker Image To Docker Hub
+          command: |
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
+            docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -48,3 +63,9 @@ workflows:
 # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
+      - docker-containerization:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master
