@@ -56,6 +56,23 @@ jobs:
             docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1 .
             docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$CIRCLE_SHA1
 
+  heroku-build-deploy:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build And push Docker Image To Heroku
+          command: |
+            set -x
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku apps:destroy --app $HEROKU_APP_NAME --confirm $HEROKU_APP_NAME
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku apps:create $HEROKU_APP_NAME --region eu || true
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SECRET_KEY=$SECRET_KEY -a $HEROKU_APP_NAME
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set DSN=$DSN -a $HEROKU_APP_NAME
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -66,6 +83,12 @@ workflows:
       - docker-containerization:
           requires:
             - build-and-test
+          filters:
+            branches:
+              only: master
+      - heroku-build-deploy:
+          requires:
+            - docker-containerization
           filters:
             branches:
               only: master
