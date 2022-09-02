@@ -141,7 +141,7 @@ L'url sera du type : https://`HEROKU_APP_NAME`.herokuapp.com/
 Ici `HEROKU_APP_NAME` serait le nom que vous auriez donné à votre application
 
 ##### Sentry :
-Vous pouvez vérifier si tout est correctement configuré pour Sentry en accédant à l'url de votre application Heroku et suivi par : `/sentry-debug`, une page d'erreur 500 sera affichée et dans votre projet Sentry l'erreur sera affichée dans la section des Issues avec une explication détaillée de l'erreur.
+Vous pouvez vérifier si tout est correctement configuré pour Sentry en accédant à l'url de votre application Heroku et suivi par : `/sentry-debug`, une page d'erreur 500 sera affichée et dans votre projet Sentry l'erreur sera affichée dans la section des Issues avec une explication détaillée de l'erreur
 
  
 
