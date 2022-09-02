@@ -101,7 +101,7 @@ Pour que le déploiement soit fonctionnel vous aurez besoin de :
 
 ##### CircleCi :
 - Clonez ce projet sur votre ordinateur et liez-le à votre propre repository.
-- Créez un projet CircleCi en associant votre dépôt GitHub à votre compte CircleCi.
+- Créez un projet CircleCi en associant votre dépôt GitHub à votre compte CircleCi
 - Créer un projet Sentry.
 - Ajoutez les variables d'environnement suivantes à votre projet CircleCi :
   - `DOCKERHUB_PASSWORD` : Votre mot de passe DockerHub
