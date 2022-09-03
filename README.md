@@ -24,7 +24,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 - `cd /path/to/Python-OC-Lettings-FR`
 - `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu).
+- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
 - Activer l'environnement `source venv/bin/activate`
 - Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
 `which python`
